@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<link rel="stylesheet" href="~/css/pages/ProfilePg.css" />
+
+<div class="profile">
+    <div class="profile-left">
+        <h4>PROFILE</h4>
+        <p>Settings</p>
+        <p>Upload Post</p>
+        <p>ChangePassword</p>
+        <p>Logout</p>
+    </div>
+    <div class="profile-right">
+        <img src="/photos/profile-icon.avif" />
+
+        <div class="input-group">
+            <label>Name</label>
+            <input type="text" value="@ViewData["name"]" disabled/>
+        </div>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" value="@ViewBag.email" disabled/>
+        </div>
+
+        <button>Edit</button>
+
+    </div>
+</div>

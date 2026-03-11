@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" /> 
+    @* <link rel="stylesheet" href="~/Travel_Blogging.styles.css" asp-append-version="true" />  *@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <img class="navbar-logo" src="/photos/flight.png" />
+            <div class="navbar-home">
+                <p onclick="window.location.href='@Url.Action("Index", "Home")'">Home</p>
+                <p>Contact</p>
+                <p>Upload post</p>
+                <p>All posts</p>
+                
+                @* if user is not authenticated then only show the login and signup button *@
+                @if (!User.Identity.IsAuthenticated)
+                    {
+                        <button type="button" onclick="window.location.href='@Url.Action("Login", "User")'">Login</button>
+                        <button type="button" onclick="window.location.href='@Url.Action("Signup", "User")'">Signup</button>
+                    }
+                    else
+                    {
+                        <img class="navbar-profile" src="/photos/profile-icon.avif" 
+                            onclick="window.location.href='@Url.Action("Profile", "User")'"
+                        />
+                    }
+
+            </div>
+            @* <div class="navbar-btn">
+                <button>Login</button>
+                <button>Signup</button>
+            </div> *@
+        </div>
+    </header>
+    <div>
+        <main>
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer>
+        <div class='footer'>
+            <div class='footer-header'>
+                <p>Connect with us on the social media</p>
+                <p>
+                    @* <span><FaFacebookF /></span>
+                    <span><FaInstagram /></span>
+                    <span><FaXTwitter /></span>
+                    <span><FiYoutube /></span> *@
+                    <span><i class="bi bi-instagram"></i></span>
+                </p>
+            </div>
+
+            <div class='footer-content'>
+                <p>
+                    <span>About Us</span>
+                    <span>We are here to help you all for calculating any expressions. </span>
+                </p>
+                <p>
+                    <span>contacts</span>
+                    <span>Whatsaap</span>
+                    <span>Discord</span>
+                    <span>Slack</span>
+
+                </p>
+                <p>
+                    <span>Useful links</span>
+                </p>
+                <p>
+                    <span>Calculator</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+</body>
+</html>

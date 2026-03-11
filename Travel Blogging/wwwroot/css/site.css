@@ -1,0 +1,139 @@
+p{
+    padding:0px;
+    margin:0px;
+}
+.navbar {
+/*    height: 3.5rem;*/
+    width: 99vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 0px 1px 0px grey;
+    border-radius: 5px;
+    padding:10px;
+}
+
+.navbar-home {
+/*    width:31rem;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    height: 2.5rem;
+    border-radius: 25px;
+}
+
+.navbar-logo{
+    height:50px;
+    width:50px;
+}
+
+.navbar-home p{
+    cursor:pointer;
+}
+
+.navbar-profile{
+    height:3rem;
+    width:3rem;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+.navbar-home button {
+    width: 5rem;
+    padding: 0.3rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.navbar-btn{
+    display:flex;
+    gap:1rem;
+}
+
+.navbar-btn button{
+    width:5rem;
+    padding:0.5rem;
+/*    background-color:tomato;*/
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+}
+
+/* footer start*/
+
+.footer {
+    height: 20vmax;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-header {
+    height: 3vmax;
+    width: 100%;
+    background-color: tomato;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.instagram{
+    height:1rem;
+    width:1rem;
+    display:inline-block;
+}
+
+.footer-content {
+    height: 15vmax;
+    width: 100%;
+/*    background-color: #363636;*/
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    box-shadow:0px 0px 2px 0px grey;
+}
+
+.footer-header p {
+    margin: 0px 0px;
+    color: #292929;
+}
+
+.footer-header p:last-child {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 18px;
+    }
+
+.footer-header span {
+    cursor: pointer;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-evenly;
+/*    color: #d8d6d6;*/
+}
+
+.footer-content p span:first-child {
+        font-weight: 600;
+        margin-bottom: 1rem;
+        margin-left: 0.5rem;
+        border-bottom: 0.5px solid grey;
+    }
+
+.footer-content p {
+        width: 11vmax;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+.footer-content p span {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }

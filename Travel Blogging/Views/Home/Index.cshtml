@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Blogging";
+
+    var datas = new[]{
+        new{
+            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09-02-2026"
+        }
+
+    };
+}
+
+<link rel="stylesheet" href="~/css/pages/HomePg.css" asp-append-version="true"/>
+
+
+<div class="home-pg">
+    <div class="home-pg-img">
+        @* <img src="/photos/home-pg.jpg" /> *@
+        <p>Upload something and share your best moments with us.</p>
+        <button>Explore More</button>
+    </div>
+    <p class="home-pg-heading">Latest Travels</p>
+    <div class="home-content">
+        @for(int i = 0; i < datas.Length; i++)
+        {
+            <div class="home-content-box" onclick="window.location.href='@Url.Action("PostDetails", "Post")'">
+                   <img src=@datas[i].img />
+                   <p class="first-child">@datas[i].content</p>
+                   <p>@datas[i].date</p>
+            </div>
+        }
+    </div>
+</div>
