@@ -27,12 +27,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // add dependency injection
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-//builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 //builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
 // add dependency injection for services
 builder.Services.AddScoped<IUserService, UserService>();
-//builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IPostService, PostService>();
 //builder.Services.AddScoped<ICommentService, CommentService>();
 
 

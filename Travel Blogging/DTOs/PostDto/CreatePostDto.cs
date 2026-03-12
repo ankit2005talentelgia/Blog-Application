@@ -16,7 +16,8 @@ namespace Travel_Blogging.DTOs.PostDto
         public string Description { get; set; }
 
         [Required(ErrorMessage ="Location is required")]
-        [StringLength(100,ErrorMessage ="Location is less than 100 length")]
+        [MaxLength(100, ErrorMessage = "Location is less than 100 length")]
+        [MinLength(10, ErrorMessage = "Location is more than 10 length")]
         public string Location { get; set; }
 
         [Required(ErrorMessage = "Image is required")]

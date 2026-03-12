@@ -16,8 +16,8 @@
             <div class="navbar-home">
                 <p onclick="window.location.href='@Url.Action("Index", "Home")'">Home</p>
                 <p>Contact</p>
-                <p>Upload post</p>
-                <p>All posts</p>
+                <p onclick="window.location.href='@Url.Action("UploadPost", "Post")'">Upload post</p>
+                <p onclick="window.location.href='@Url.Action("AllPost","Post")'">All posts</p>
                 
                 @* if user is not authenticated then only show the login and signup button *@
                 @if (!User.Identity.IsAuthenticated)

@@ -1,0 +1,88 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{ 
+}
+@model Travel_Blogging.DTOs.PostDto.CreatePostDto;
+
+
+<link rel="stylesheet" href="~/css/pages/UploadPost.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.css">
+
+<div class="post-container">
+
+    <h2 class="post-heading">Create Travel Post</h2>
+    @* <form asp-action="CreatePost" method="post" enctype="multipart/form-data"> *@
+    <form asp-action="CreatePost" asp-controller="Post" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label class="form-img-input">
+                <img id="preview" src="" />
+
+                <span id="uploadText">Choose File</span>
+
+                <input asp-for="Image" type="file" accept="image/*" onchange="previewImage(event)">
+            </label>
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Post Title</label>
+            <input asp-for="Title" class="form-input" placeholder="Enter Post Title" />
+             <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Location</label>
+            <input asp-for="Location" class="form-input" placeholder="Enter Location"/>
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea asp-for="Description" id="editor"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <button class="publish-btn">Publish Post</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.js"></script>
+
+<script>
+    function previewImage(event){
+        const file = event.target.files[0];
+        if(file){
+            const reader = new FileReader();
+            reader.onload = function(){
+                document.getElementById("preview").src = reader.result;
+                document.getElementById("preview").style.display = "block";
+                document.getElementById("uploadText").style.display = "none";
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const editor = new Jodit('#editor', {
+            height: 300,
+            toolbarSticky: false,
+            readonly: false,
+            buttons: [
+                'bold',
+                'italic',
+                'underline',
+                '|',
+                'ul',
+                'ol',
+                '|',
+                'align'
+            ],
+            removeButtons: [
+            'about','print','source','fullsize','table','link','video','file','image',
+            ]
+        });
+    });
+</script>
+

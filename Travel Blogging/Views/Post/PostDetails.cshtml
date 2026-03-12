@@ -1,7 +1,11 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@using Travel_Blogging.Models;
+
 @{
+    var post = ViewBag.post as Travel_Blogging.Models.PostModel;
 }
 
 <link rel="stylesheet" href="~/css/pages/PostDetails.css" />
@@ -13,20 +17,21 @@
 
     <div class="blog-card">
 
-        <img class="blog-image" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
+        <img class="blog-image" src=@post.ImageUrl>
 
         <div class="blog-content">
 
-            <div class="title">Beautiful Beach in Goa</div>
+            @* <p class="title">Beautiful Beach in Goa</p> *@
+            <p class="title">@post.Title</p>
 
-            <div class="location">📍 Goa, India</div>
+            @* <p class="location">📍 Goa, India</p> *@
+            <p class="location">📍 @post.Location</p>
 
-            <div class="description">
-                This place was absolutely amazing. The beach water was crystal clear and the sunset view was breathtaking.
-                The environment was peaceful and perfect for relaxing with friends and family.
-            </div>
+            <p class="description">
+                @post.Description
+            </p>
 
-            <div class="date">Posted on: 10 March 2026</div>
+            <p class="date">Posted on: @post.CreatedAt.ToString("dd-MM-yyyy")</p>
 
         </div>
     </div>
@@ -35,28 +40,25 @@
 
     <div class="review-container">
 
-        <div class="review-heading">User Reviews</div>
+        <p class="review-heading">User Reviews</p>
 
         <div class="review-card">
-            <div class="review-user">Rahul</div>
-            <div class="review-text">Amazing place! The sunset view is unforgettable.</div>
+            <p class="review-user">Rahul Kumar</p>
+            <p class="review-text">Amazing place! The sunset view is unforgettable.</p>
+            <p class="date">Posted on: 10 March 2026</p>
         </div>
 
         <div class="review-card">
-            <div class="review-user">Priya</div>
-            <div class="review-text">Loved the beach vibes and peaceful environment.</div>
-        </div>
-
-        <div class="review-card">
-            <div class="review-user">Amit</div>
-            <div class="review-text">Perfect destination for vacation.</div>
+            <p class="review-user">Priya Singh Rajput</p>
+            <p class="review-text">Loved the beach vibes and peaceful environment.</p>
+            <p class="date">Posted on: 10 March 2026</p>
         </div>
 
     <!-- ADD REVIEW -->
 
         <div class="add-review">
             <textarea rows="3" placeholder="Write your review..."></textarea>
-            <button>Post Review</button>
+            <button class="add-review-btn">Post Review</button>
         </div>
 
     </div>

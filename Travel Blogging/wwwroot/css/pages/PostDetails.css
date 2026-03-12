@@ -20,9 +20,11 @@
 }
 
 .blog-image{
+    top:0;
     width:100%;
-    height:350px;
-    object-fit:cover;
+    min-height:200px;
+    max-height:550px;
+    object-fit:cover
 }
 
 .blog-content {
@@ -50,7 +52,7 @@
 
 .date {
     font-size: 13px;
-    color: #999;
+    color: #777;
 }
 
 /* REVIEW SECTION */
@@ -62,7 +64,11 @@
 .review-heading {
     font-size: 22px;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin:20px auto;
+    border-bottom: 1px solid grey;
+    width: 13rem;
+    text-align: center;
+    letter-spacing: 3px;
 }
 
 /* SINGLE REVIEW CARD */
@@ -99,7 +105,8 @@
     resize: none;
 }
 
-.add-review button {
+.add-review-btn {
+    width: 9rem;
     margin-top: 10px;
     padding: 10px 20px;
     border: none;
@@ -107,6 +114,8 @@
     color: white;
     border-radius: 6px;
     cursor: pointer;
+    display: flex;
+    margin: 0 auto;
 }
 
 .add-review button:hover {

@@ -1,0 +1,75 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@* @{
+    var datas = new[]{
+        new{
+            img= "https:static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https:static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https:static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https:static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https:static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https:static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https:static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https:static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09 - 02 - 2026"
+        },
+        new{
+            img= "https:static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
+            content= "This is very famous and best place for visit",
+            date= "09-02-2026"
+        }
+
+    }; *@
+@using Travel_Blogging.Models;
+
+@{
+    var datas = ViewData["posts"] as List<PostModel>;
+}
+
+
+
+<link rel="stylesheet" href="~/css/pages/AllPost.css" />
+
+<div class="all-post">
+    <p class="all-post-heading">ALL POSTS</p>
+    <div class="all-post-content">
+        @foreach(var post in datas?? new List<PostModel>())
+        {
+            <div class="all-post-content-box" onclick="window.location.href='@Url.Action("PostDetails", "Post", new{id=post.Id})'">
+                <img src=@post.ImageUrl />
+                <p>@post.Title</p>
+                <p>📍@post.CreatedAt.ToString("dd-MM-yyyy")</p>
+            </div>
+        }
+    </div>
+</div>

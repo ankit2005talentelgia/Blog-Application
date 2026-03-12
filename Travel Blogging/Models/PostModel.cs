@@ -10,9 +10,9 @@ namespace Travel_Blogging.Models
         public string Description { get; set; }
         public string Location { get; set; }
         public string ImageUrl { get; set; }
-        public string AuthorId { get; set; }
-        public UserModel? User { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public int AuthorId { get; set; }
+        public UserModel? Author { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public List<CommentModel>? Comments { get; set; }
     }
 }

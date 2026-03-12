@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Travel_Blogging.Data;
 
@@ -11,9 +12,11 @@ using Travel_Blogging.Data;
 namespace Travel_Blogging.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260312102635_fixSomeIssue")]
+    partial class fixSomeIssue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,9 +90,14 @@ namespace Travel_Blogging.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserModelId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("UserModelId");
 
                     b.ToTable("Posts");
                 });
@@ -148,10 +156,14 @@ namespace Travel_Blogging.Migrations
             modelBuilder.Entity("Travel_Blogging.Models.PostModel", b =>
                 {
                     b.HasOne("Travel_Blogging.Models.UserModel", "Author")
-                        .WithMany("Posts")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Travel_Blogging.Models.UserModel", null)
+                        .WithMany("Posts")
+                        .HasForeignKey("UserModelId");
 
                     b.Navigation("Author");
                 });
