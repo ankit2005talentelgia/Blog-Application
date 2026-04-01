@@ -1,4 +1,4 @@
-﻿body {
+body {
     font-family: Arial, Helvetica, sans-serif;
     background: #f3f5f9;
     margin: 0;
@@ -6,8 +6,10 @@
 }
 
 .container {
-    width:750px;
-    margin:40px auto;
+    width: 95%;
+    max-width: 950px;
+    margin: 30px auto;
+    padding: 0 15px;
 }
 
 /* BLOG CARD */
@@ -19,12 +21,13 @@
     box-shadow:0 8px 20px rgba(0,0,0,0.08);
 }
 
-.blog-image{
-    top:0;
-    width:100%;
-    min-height:200px;
-    max-height:550px;
-    object-fit:cover
+.blog-image {
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+    max-height: 500px;
+    object-fit: cover;
+    display: block;
 }
 
 .blog-content {
@@ -40,8 +43,12 @@
 .location {
     color: #777;
     font-size: 14px;
-    margin-bottom: 15px;
 }
+
+.location svg {
+    margin-bottom: 6px;
+    color: #de0d0d;
+ }
 
 .description {
     font-size: 16px;
@@ -75,20 +82,68 @@
 
 .review-card {
     background: white;
-    padding: 18px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.07);
+    padding: 1.2rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.review-card-content{
+    display:flex;
+    flex-direction:column;
+    gap:0.2rem;
+}
+
+.review-card-icons {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+svg.delete-icon{
+    height: 18px;
+    width: 24px;
+    cursor: pointer;
+    color: grey;
+    transition: all 0.3s ease;
+}
+
+svg.bi.bi-pencil-square {
+    height: 18px;
+    width: 24px;
+    cursor: pointer;
+    color: grey;
+    transition: all 0.3s ease;
+}
+
+svg.delete-icon:hover {
+    color: black;
+}
+
+svg.bi.bi-pencil-square:hover{
+    color:black;
 }
 
 .review-user {
     font-weight: bold;
-    margin-bottom: 5px;
 }
 
 .review-text {
     color: #555;
     font-size: 14px;
+}
+
+svg.bi.bi-person {
+    margin-bottom: 5px;
+}
+
+svg.bi.bi-calendar {
+    margin-bottom: 5px;
+    height: 12px;
 }
 
 /* ADD REVIEW */
@@ -97,27 +152,57 @@
     margin-top: 25px;
 }
 
-.add-review textarea {
+.add-review form{
+    display:flex;
+}
+
+.form-input{
+    width:100%;
+}
+
+.form-input textarea {
+    height:3rem;
     width: 100%;
-    padding: 12px;
+    padding: 11px;
     border-radius: 8px;
     border: 1px solid #ccc;
-    resize: none;
+/*    resize: none;*/
 }
 
 .add-review-btn {
-    width: 9rem;
-    margin-top: 10px;
-    padding: 10px 20px;
+    height: 3rem;
     border: none;
-    background: #667eea;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    margin: 0 auto;
+    color: #7d7d7d;
+    background: #f4f4f4;
+    text-align: center;
 }
 
-.add-review button:hover {
-    background: #5771e4;
+button.add-review-btn svg {
+    transform: rotate(15deg);
+    cursor: pointer;
+    transition:all 0.3s ease;
 }
+
+button.add-review-btn svg:hover {
+    color:black;
+}
+
+.input-validation-error {
+    border: 1px solid red;
+}
+
+.text-danger {
+    font-size: 12px;
+    color: red;
+}
+
+/* Media Queries */
+@media screen and (max-width: 500px) {
+    .review-card {
+        flex-direction: column;
+    }
+    .review-card-icons {
+        align-self: flex-end;
+    }
+}
+

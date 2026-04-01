@@ -1,14 +1,16 @@
-﻿.auth-container {
-    height: 90vh;
-    width: 98vw;
+.auth-container {
+    min-height: 90vh;
+    width: 100%;
     display: flex;
-    padding: 0px;
-    margin: 0px;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
 }
 
 .auth-img {
     height: 90vh;
-    width: 50vw;
+    width: 50%;
+    display: block;
 }
 
 .auth-img img {
@@ -19,21 +21,23 @@
 }
 
 .auth-card-container {
-    height: 90vh;
-    width: 50vw;
+    min-height: 90vh;
+    width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 2rem 0;
 }
 
 .auth-card {
-    width: 32vw;
-/*    height: 82vh;*/
+    width: 100%;
+    max-width: 500px;
     background: #fff;
-    padding: 30px;
+    padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     text-align: center;
+    margin: 0 1.5rem;
 }
 
 .auth-card h5 {
@@ -47,6 +51,8 @@
 }
 
 .input-group {
+    display:flex;
+    flex-direction:column;
     text-align: left;
     margin-bottom: 10px;
 }
@@ -70,6 +76,34 @@
 .input-group input:focus {
     border-color: #667eea;
 }
+
+.password-wrapper {
+    position: relative;
+}
+
+#togglePassword {
+    position: absolute;
+    right: 10px;
+    top: 17px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: none;
+}
+
+#togglePassword svg {
+    color: #333; /* ya black */
+}
+
+/* browser default eye remove (important) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+}
+
 
 .auth-btn {
     width: 100%;
@@ -107,3 +141,13 @@
     font-size: 12px;
     color: red;
 }
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+    .auth-img {
+        display: none;
+    }
+    .auth-card-container {
+        width: 100%;
+    }
+}

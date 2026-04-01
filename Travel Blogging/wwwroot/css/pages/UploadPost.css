@@ -1,15 +1,16 @@
-﻿.post-container {
-    width: 700px;
-    margin: 40px auto;
+.post-container {
+    width: 95%;
+    max-width: 900px;
+    margin: 30px auto;
     background: white;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     font-family: Arial, Helvetica, sans-serif;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .post-heading {
@@ -19,8 +20,8 @@
 
 .form-group {
     margin-bottom: 20px;
-    width:650px;
-    
+    width: 100%;
+    max-width: 800px;
 }
 
 .form-img-input {
@@ -37,22 +38,52 @@
     margin: 0 auto;
 }
 
-    .form-img-input img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-        display: block;
-        object-position:center;
-    }
+.form-img-input img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    object-position: center;
+}
 
-    .form-img-input input {
-        position: absolute;
-        opacity: 0;
-        height: 100%;
-        width: 100%;
-        cursor: pointer;
-    }
+.post-container form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.draft-btn {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    background: white;
+    color: #333;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.draft-btn:hover {
+    background: #f8f9fa;
+}
+
+.form-img-input input {
+    position: absolute;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
 
 #uploadText {
     position: absolute;
@@ -96,4 +127,21 @@ label {
 .text-danger {
     font-size: 12px;
     color: red;
+}
+
+.text-danger-image {
+    font-size: 12px;
+    color: red;
+    display: block;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+/* Media Queries */
+@media screen and (max-width: 480px) {
+    .button-group {
+        flex-direction: column;
+    }
 }

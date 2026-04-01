@@ -1,33 +1,109 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+@model Travel_Blogging.DTOs.UserDto.ChangePasswordDto;
 
-<link rel="stylesheet" href="~/css/pages/ProfilePg.css" />
+<link rel="stylesheet" href="~/css/pages/ProfilePg.css" asp-append-version="true" />
 
 <div class="profile">
-    <div class="profile-left">
-        <h4>PROFILE</h4>
-        <p>Settings</p>
-        <p>Upload Post</p>
-        <p>ChangePassword</p>
-        <p>Logout</p>
+
+    <!-- ✅ Hamburger Button -->
+    <button class="profile-toggle" id="profileToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- ✅ Overlay -->
+    <div id="overlay"></div>
+
+    <!-- ✅ Sidebar -->
+    <div class="profile-left" id="profileSidebar">
+        <!-- Close button inside the sidebar drawer -->
+        <button class="sidebar-close" id="sidebarClose">&times;</button>
+        <div class="profile-left-header">
+            <h4>PROFILE</h4>
+        </div>
+
+        <p onclick="window.location.href='@Url.Action("Profile", "User")'">Profile</p>
+        <p onclick="window.location.href='@Url.Action("UserAllPosts", "Post")'">Your All Posts</p>
+        <p onclick="window.location.href='@Url.Action("ChangePasswordPage", "User")'">
+            Change Password
+        </p>
+        <p onclick="deleteAccount()">Delete Account</p>
+        <p onclick="window.location.href='@Url.Action("Logout", "User")'">Logout</p>
     </div>
+
+    <!-- ✅ Right Content -->
     <div class="profile-right">
-        <img src="/photos/profile-icon.avif" />
+        @{
+            var section = ViewBag.Section as string;
+        }
 
-        <div class="input-group">
-            <label>Name</label>
-            <input type="text" value="@ViewData["name"]" disabled/>
-        </div>
-
-        <div class="input-group">
-            <label>Email</label>
-            <input type="email" value="@ViewBag.email" disabled/>
-        </div>
-
-        <button>Edit</button>
-
+        @if (section == "ChangePassword")
+        {
+            <partial name="_ChangePassword" model="Model" />
+        }
+        else
+        {
+            <partial name="_ProfileDetails" />
+        }
     </div>
+
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // validation blur
+        $(function () {
+            $("#myForm input").blur(function () {
+                $(this).valid();
+            });
+        });
+
+        // edit profile enable
+        $("#editBtn").click(function () {
+            $("#profileForm input").prop("disabled", false);
+            $("#editBtn").hide();
+            $("#saveBtn").show();
+        });
+
+        // update profile
+        document.getElementById("profileForm")?.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch('/user/update', {
+                method: 'PUT',
+                body: formData
+            })
+            .then(res => window.location.reload())
+            .catch(err => console.log("error: ", err));
+        });
+
+        const toggleBtn = document.getElementById("profileToggle");
+        const sidebar = document.getElementById("profileSidebar");
+        const overlay = document.getElementById("overlay");
+        const closeBtn = document.getElementById("sidebarClose");
+
+        const closeAll = () => {
+            sidebar.classList.remove("active");
+            overlay.classList.remove("active");
+            toggleBtn.classList.remove("active");
+        };
+
+        toggleBtn?.addEventListener("click", () => {
+            sidebar.classList.toggle("active");
+            overlay.classList.toggle("active");
+            toggleBtn.classList.toggle("active");
+        });
+
+        overlay?.addEventListener("click", closeAll);
+        closeBtn?.addEventListener("click", closeAll);
+
+        // Also close sidebar on navigation link clicks (to ensure clean slate)
+        document.querySelectorAll(".profile-left p").forEach(item => {
+            item.addEventListener("click", closeAll);
+        });
+    </script>
+}

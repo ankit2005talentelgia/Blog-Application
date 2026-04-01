@@ -8,5 +8,15 @@ namespace Travel_Blogging.Repositories.Interfaces
         Task<List<PostModel>> FindPostsAsync();
 
         Task<PostModel> FindPostDetailsAsync(int postId);
+
+        Task<List<PostModel>> FindLatestPostsAsync();
+
+        Task<List<PostModel>> FindUserPostsAsync(int userId);
+
+        Task DeleteUserPostAsync(int postId, int userId);
+
+        Task<PostModel> FindPostByIdAsync(int postId);
+
+        Task UpdatePostAsync();
     }
 }

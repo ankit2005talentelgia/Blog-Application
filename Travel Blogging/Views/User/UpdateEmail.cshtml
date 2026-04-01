@@ -1,0 +1,24 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<link rel="stylesheet" href="~/css/pages/EmailVerification.css" asp-append-version="true" />
+@model Travel_Blogging.DTOs.UserDto.UpdateEmailDto;
+
+<form id="myForm" class="update-email" method="post" asp-controller="User" asp-action="UpdateEmail">
+    <div class="update-email-body">
+        <p>Update Your Email</p>
+        <div class="email-wrapper">
+            <label>Email</label>
+            <input asp-for="Email" type="email" placeholder="enter your email" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <button>Update Email</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,74 +1,56 @@
-﻿@{
-    ViewData["Title"] = "Blogging";
+﻿
+@using Travel_Blogging.Models;
 
-    var datas = new[]{
-        new{
-            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
-            content= "This is very famous and best place for visit",
-            date= "09 - 02 - 2026"
-        },
-        new{
-            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
-            content= "This is very famous and best place for visit",
-            date= "09 - 02 - 2026"
-        },
-        new{
-            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
-            content= "This is very famous and best place for visit",
-            date= "09 - 02 - 2026"
-        },
-        new{
-            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
-            content= "This is very famous and best place for visit",
-            date= "09 - 02 - 2026"
-        },
-        new{
-            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
-            content= "This is very famous and best place for visit",
-            date= "09 - 02 - 2026"
-        },
-        new{
-            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
-            content= "This is very famous and best place for visit",
-            date= "09 - 02 - 2026"
-        },
-        new{
-            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
-            content= "This is very famous and best place for visit",
-            date= "09 - 02 - 2026"
-        },
-        new{
-            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
-            content= "This is very famous and best place for visit",
-            date= "09 - 02 - 2026"
-        },
-        new{
-            img= "https://static.vecteezy.com/system/resources/previews/008/063/100/large_2x/rear-view-portrait-of-young-man-traveler-with-backpack-standing-on-a-mountain-with-arms-spread-open-travel-life-style-and-adventure-concept-free-photo.jpg",
-            content= "This is very famous and best place for visit",
-            date= "09-02-2026"
-        }
-
-    };
+@{
+    var datas = ViewData["posts"] as List<PostModel>;
 }
+
 
 <link rel="stylesheet" href="~/css/pages/HomePg.css" asp-append-version="true"/>
 
 
 <div class="home-pg">
     <div class="home-pg-img">
-        @* <img src="/photos/home-pg.jpg" /> *@
-        @* <p>Upload something and share your best moments with us.</p>
-        <button>Explore More</button> *@
+        <p>Collect moments, not things.</p>
+        <p class="home-pg-content">This websites is for helping the people to share the best moments in their life.</p>
+        <div>
+            <button onclick="window.location.href='@Url.Action("AllPost", "Post")'">Explore</button>
+            <button onclick="window.location.href='@Url.Action("UploadPost", "Post")'">Create Blog</button>
+        </div>
     </div>
     <p class="home-pg-heading">Latest Travels</p>
-    <div class="home-content">
-        @for(int i = 0; i < datas.Length; i++)
-        {
-            <div class="home-content-box" onclick="window.location.href='@Url.Action("PostDetails", "Post")'">
-                   <img src=@datas[i].img />
-                   <p class="first-child">@datas[i].content</p>
-                   <p>@datas[i].date</p>
-            </div>
-        }
-    </div>
+    @if (datas.Count > 0)
+    {
+        <div class="home-content">
+            @foreach (var post in datas ?? new List<PostModel>())
+            {
+                <div class="home-content-box" onclick="window.location.href='@Url.Action("PostDetails", "Post", new { id = post.Id })'">
+                    <img src=@post.ImageUrl />
+                    <p class="first-child">@post.Title</p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                        </svg>
+                        
+                        @post.CreatedAt.ToString("dd-MM-yyyy")
+                    </p>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="post-empty-box">
+            <img src="/photos/empty-box.png" />
+            <p>Post is Empty</p>
+            <button onclick="window.location.href='@Url.Action("UploadPost", "Post")'">Add Post</button>
+        </div>
+    }
 </div>
+
+
+@* 1. "Share Your Ride, Tell Your Story — Post Your Moto Blog Today!"
+
+2. "Your Journey Deserves the Spotlight — Publish Your Motorcycle Blog Here!"
+
+3. "From Road to Readers — Post Your Moto Adventures Now!" *@

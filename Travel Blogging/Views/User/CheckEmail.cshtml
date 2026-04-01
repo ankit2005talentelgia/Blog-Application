@@ -1,0 +1,14 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<link rel="stylesheet" href="~/css/pages/EmailVerification.css" asp-append-version="true"/>
+
+<div class="email-verification">
+    <div class="email-verification-body">
+        <p>Verify your Email</p>
+        <button onclick="window.location.href='@Url.Action("UpdateEmail", "User")'">Update Email</button>
+    </div>
+</div>

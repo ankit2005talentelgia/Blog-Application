@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using Travel_Blogging.Data;
+using Travel_Blogging.Models;
 using Travel_Blogging.Repositories.Implementations;
 using Travel_Blogging.Repositories.Interfaces;
 using Travel_Blogging.Services.Implementations;
@@ -25,15 +27,19 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+
+// this is for mail configuration so that mail confirmation is startes
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 // add dependency injection
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
-//builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 
 // add dependency injection for services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
-//builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 
 
 // Add the cookie authentication middleware for authenticating the user

@@ -1,4 +1,4 @@
-﻿@*
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{ 
@@ -11,19 +11,30 @@
 
 <div class="post-container">
 
-    <h2 class="post-heading">Create Travel Post</h2>
+    @* <h2 class="post-heading">Create Travel Post</h2> *@
     @* <form asp-action="CreatePost" method="post" enctype="multipart/form-data"> *@
-    <form asp-action="CreatePost" asp-controller="Post" method="post" enctype="multipart/form-data">
+    <form id="myForm" asp-action="@ViewBag.Action" asp-controller="Post" method="post" enctype="multipart/form-data">
+
+        @* this is hidden field *@
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ExistingImageUrl" />
+
+        <!--  actionType hidden input for button -->
+        <input type="hidden" name="actionType" id="actionType" />
 
         <div class="form-group">
             <label class="form-img-input">
-                <img id="preview" src="" />
+                <img id="preview"
+                     src="@(Model?.ExistingImageUrl ?? "")"
+                     style="@(Model?.ExistingImageUrl != null ? "display:block" : "display:none")" />
 
-                <span id="uploadText">Choose File</span>
+                <span id="uploadText">
+                    @(Model?.ExistingImageUrl != null ? "Change Image" : "Choose File")
+                </span>
 
                 <input asp-for="Image" type="file" accept="image/*" onchange="previewImage(event)">
             </label>
-            <span asp-validation-for="Image" class="text-danger"></span>
+                <span asp-validation-for="Image" class="text-danger-image">@ViewBag.Error</span>
         </div>
 
         <div class="form-group">
@@ -44,13 +55,25 @@
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
-        <button class="publish-btn">Publish Post</button>
+            <div class="button-group">
+                <!-- Draft Button -->
+                <button type="submit" class="draft-btn" onclick="setAction('draft')">
+                    Save Draft
+                </button>
+
+                <!-- Publish Button -->
+                <button type="submit" class="publish-btn" onclick="setAction('publish')">
+                    @(Model?.Id == 0 ? "Publish Post" : "Update & Publish")
+                </button>
+            </div>
+
     </form>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.js"></script>
 
 <script>
+    // this is for showing the Image in Input field of image
     function previewImage(event){
         const file = event.target.files[0];
         if(file){
@@ -64,6 +87,7 @@
         }
     }
 
+    // this is the Jodit library functionality which says which one is showing and which one is not showing
     document.addEventListener("DOMContentLoaded", function() {
         const editor = new Jodit('#editor', {
             height: 300,
@@ -84,5 +108,23 @@
             ]
         });
     });
+
+
+    // this is for when button is clicked
+    function setAction(value) {
+        document.getElementById("actionType").value = value;
+    }
+
 </script>
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(function () {
+        $("#myForm input").blur(function () {
+        $(this).valid();
+        });
+    });
+    </script>
+}
