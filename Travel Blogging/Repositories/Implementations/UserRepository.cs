@@ -40,7 +40,11 @@ namespace Travel_Blogging.Repositories.Implementations
         {
             var user=await _context.Users.FindAsync(userId);
 
-            _context.Users.Remove(user);
+            user.IsDeleted = true;
+            user.IsActive = false;
+            user.UpdatedAt = DateTime.Now;
+
+            _context.Users.Update(user);
 
             await _context.SaveChangesAsync();
         }

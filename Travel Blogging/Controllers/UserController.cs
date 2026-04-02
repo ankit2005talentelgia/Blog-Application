@@ -335,7 +335,7 @@ namespace Travel_Blogging.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                _toastNotification.AddAlertToastMessage("place login first");
+                _toastNotification.AddAlertToastMessage("please login first");
                 return RedirectToAction("Login", "User");
             }
 

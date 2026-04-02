@@ -4,6 +4,12 @@
 @{
 }
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 @using Travel_Blogging.Models;
 
 @{
@@ -23,14 +29,14 @@
             {
                 <div class="all-post-content-box" onclick="window.location.href='@Url.Action("PostDetails", "Post", new { id = post.Id })'">
                     <img src=@post.ImageUrl />
-                    <p>@post.Title</p>
+                    <p class="all-post-content-box-title">
+                        <svg style="margin-bottom: 6px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                            <path style="color: #de0d0d" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
+                        </svg>
+                        @post.Title</p>
 
                     <div class="all-post-delete-section">
                         <p>
-                            <svg style="margin-bottom: 6px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-                                <path style="color: #de0d0d" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
-                            </svg>
-
                             @post.CreatedAt.ToString("dd-MM-yyyy")
                         </p>
 
@@ -61,29 +67,46 @@
 </div>
 
 <script>
-    // this is for deleting the post when loggedin user clicks the delete icon or button
+    // delete functionality with confirmation popup
     let deletes = document.querySelectorAll(".delete-icon");
 
     deletes.forEach(icon => {
-        icon.addEventListener("click", function (e){
-            e.stopPropagation();
+        icon.addEventListener("click", function (e) {
+        e.stopPropagation();
 
-            let postId = parseInt(this.getAttribute("post-id"));
-            console.log("delete ",postId);
+        let postId = parseInt(this.getAttribute("post-id"));
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Note: You won’t be able to undo this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+            })
+        .then((result) => {
+            if (result.isConfirmed) {
+
             fetch("/post/delete", {
                 method: "DELETE",
                 headers: {
-                    "Content-Type": "application/json"
+                "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ PostId: postId })
-            })
-            .then(() => {
-                location.reload();
-            })
-            .catch(err=>console.log("error:",err));
+                })
+                .then(() => {
+                Swal.fire('Deleted!', 'Your post has been deleted.', 'success')
+                .then(() => location.reload());
+                })
+                .catch(err => console.log("error:", err));
+                }
+            });
+
         });
     });
-
+    
+    // this is for editing the post
     let edits = document.querySelectorAll(".edit-icon");
 
     edits.forEach(icon => {

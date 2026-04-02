@@ -1,9 +1,9 @@
 .profile {
-    /* min-height: 85vh; */
+     min-height: 79vh; 
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     gap: 2rem;
     padding: 2rem 5%;
     flex-wrap: nowrap;
@@ -16,7 +16,7 @@
     min-height: 25rem;
     width: 100%;
     max-width: 18rem;
-    padding: 1.5rem;
+    padding: 3rem;
     border: 1px solid #ddd;
     border-radius: 12px;
     display: flex;

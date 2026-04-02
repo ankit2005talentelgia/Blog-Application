@@ -48,10 +48,11 @@
     padding: 0px;
 }
 
-.all-post-content-box p:first-child {
-    color: #6a6969;
+.all-post-content-box-title {
+    color: #444343;
     line-height: 18px;
-    font-weight: 400;
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 
 .all-post-content-box p:last-child {
@@ -127,4 +128,4 @@
     .all-post-content {
         grid-template-columns: 1fr;
     }
-}
+}
