@@ -64,6 +64,15 @@ if (!app.Environment.IsDevelopment())
     
 }
 
+app.Use(async (context, next) =>
+{
+    context.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+    context.Response.Headers["Pragma"] = "no-cache";
+    context.Response.Headers["Expires"] = "0";
+
+    await next();
+});
+
 // add the ntoast notify
 app.UseNToastNotify();
 
@@ -79,3 +88,14 @@ app.MapControllers();
 
 
 app.Run();
+
+
+
+//app.Use(async (context, next) =>
+//{
+//    context.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+//    context.Response.Headers["Pragma"] = "no-cache";
+//    context.Response.Headers["Expires"] = "0";
+
+//    await next();
+//});

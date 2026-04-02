@@ -83,6 +83,7 @@ namespace Travel_Blogging.Controllers
 
 
         // this function is for showing the UI to the user to verify their email
+        [Authorize]
         [HttpGet("CheckEmail")]
         public IActionResult CheckEmail()
         {
@@ -118,6 +119,7 @@ namespace Travel_Blogging.Controllers
 
 
         // this function is for showing the UI page of update email when user register with wrong email
+        [Authorize]
         [HttpGet("update-email")]
         public IActionResult UpdateEmail()
         {
@@ -144,16 +146,16 @@ namespace Travel_Blogging.Controllers
         [HttpPost("update-email")]
         public async Task<IActionResult> UpdateEmail(UpdateEmailDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(dto);
-            }
-            
             // check the user is authenticated or not
             if (!User.Identity.IsAuthenticated)
             {
                 _toastNotification.AddWarningToastMessage("please login first");
                 return RedirectToAction("Login", "User");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(dto);
             }
 
             // check that if user is already verified then redirect to the profile
@@ -245,6 +247,7 @@ namespace Travel_Blogging.Controllers
         }
 
         // this function is for loading the profile page with default user's name and email
+        [Authorize]
         [HttpGet("profile")]
         public IActionResult Profile()
         {
@@ -278,6 +281,7 @@ namespace Travel_Blogging.Controllers
         }
 
         // this function is for loading the change password section of profile page when user's click changepassword btn
+        [Authorize]
         [HttpGet("change-password")]
         public IActionResult ChangePasswordPage()
         {
@@ -330,6 +334,7 @@ namespace Travel_Blogging.Controllers
 
 
         // this function is for deleting the user's profile from database
+        [Authorize]
         [HttpGet("profile/delete")]
         public async Task<IActionResult> DeleteProfile()
         {
