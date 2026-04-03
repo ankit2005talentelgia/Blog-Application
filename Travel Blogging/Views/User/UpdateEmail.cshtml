@@ -1,23 +1,28 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Travel_Blogging.DTOs.UserDto.UpdateEmailDto;
 
 <link rel="stylesheet" href="~/css/pages/EmailVerification.css" asp-append-version="true" />
-@model Travel_Blogging.DTOs.UserDto.UpdateEmailDto;
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<form id="myForm" class="update-email" method="post" asp-controller="User" asp-action="UpdateEmail">
-    <div class="update-email-body">
-        <p>Update Your Email</p>
+<div class="update-email">
+    <form id="myForm" class="update-email-body" method="post" asp-controller="User" asp-action="UpdateEmail">
+        <h1>Update your email</h1>
+        <p>Enter your new email address below to update your account and receive a new verification link.</p>
+
         <div class="email-wrapper">
-            <label>Email</label>
-            <input asp-for="Email" type="email" placeholder="enter your email" required />
+            <label asp-for="Email">New Email</label>
+            <input asp-for="Email" type="email" placeholder="example@gmail.com" required />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
-        <button>Update Email</button>
-    </div>
-</form>
+
+        <button type="submit" class="btn-primary">
+            Update & Resend Verification
+        </button>
+        
+        <p class="change-email-link">
+            <a asp-controller="User" asp-action="CheckEmail">← Back to verification</a>
+        </p>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

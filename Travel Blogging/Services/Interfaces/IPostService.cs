@@ -11,12 +11,12 @@ namespace Travel_Blogging.Services.Interfaces
 
         Task<List<PostModel>> FindLatestPosts();
 
-        Task<List<PostModel>> FindUserPosts(int userId);
+        Task<List<PostModel>> FindUserPosts(int userId, bool isDraft = false);
 
         Task DeleteUserPost(int postId, int userId);
 
         Task<CreatePostDto> EditPost(int postId); // this is for sending the saved data to the clint (httpget)
 
-        Task<PostModel> UpdatePost(CreatePostDto dto);
+        Task<PostModel> UpdatePost(CreatePostDto dto, string actionType);
     }
 }

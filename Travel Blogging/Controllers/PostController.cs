@@ -26,6 +26,13 @@ namespace Travel_Blogging.Controllers
         {
             var post=await _postService.FindPostDetails(id);
 
+            // Added null check to prevent crash if post is deleted
+            if (post == null)
+            {
+                _toastNotification.AddErrorToastMessage("Post not found");
+                return RedirectToAction("AllPost");
+            }
+
             // if user logged-in then show the delete, edit review buttons so that user can easily edit/delete review
             if (User.Identity.IsAuthenticated)
             {
@@ -87,6 +94,7 @@ namespace Travel_Blogging.Controllers
             // check the file format
             if(dto.Image==null || dto.Image.Length == 0)
             {
+                ViewBag.Action = "UploadPost";
                 ViewBag.Error = "please select a valid image";
                 return View(dto);
             }
@@ -97,6 +105,7 @@ namespace Travel_Blogging.Controllers
             var extension = Path.GetExtension(dto.Image.FileName).ToLower();
             if (Array.IndexOf(allowedExtensions, extension) < 0)
             {
+                ViewBag.Action = "UploadPost";
                 ViewBag.Error = "Only jpg, jpeg, png, gif image format is valid";
                 return View(dto);
             }
@@ -114,7 +123,7 @@ namespace Travel_Blogging.Controllers
 
         // this function is for giving all the posts of currently loggedin user
         [HttpGet("all-posts")]
-        public async Task<IActionResult> UserAllPosts()
+        public async Task<IActionResult> UserAllPosts(bool isDraft = false)
         {
             if (!User.Identity.IsAuthenticated)
             {
@@ -135,9 +144,10 @@ namespace Travel_Blogging.Controllers
             // if verified then show
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            var posts = await _postService.FindUserPosts(userId);
+            var posts = await _postService.FindUserPosts(userId, isDraft);
 
             ViewData["posts"] = posts;
+            ViewBag.isDraft = isDraft;
             return View();
         }
 
@@ -173,9 +183,16 @@ namespace Travel_Blogging.Controllers
             return View("UploadPost", post); 
         }
 
+        // Added GET handler to prevent 405 error on page refresh during edit
+        [HttpGet("update")]
+        public IActionResult UpdatePost()
+        {
+            return RedirectToAction("UserAllPosts");
+        }
+
         // update post
         [HttpPost("update")]
-        public async Task<IActionResult> UpdatePost(CreatePostDto dto)
+        public async Task<IActionResult> UpdatePost(CreatePostDto dto, string actionType)
         {
             if (!ModelState.IsValid)
             {
@@ -192,7 +209,7 @@ namespace Travel_Blogging.Controllers
 
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-            var post=await _postService.UpdatePost(dto);
+            var post=await _postService.UpdatePost(dto, actionType);
 
             if (post == null)
             {

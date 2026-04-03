@@ -11,17 +11,17 @@
 
 <div class="profile">
 
-    <!-- ✅ Hamburger Button -->
+    <!-- Hamburger Button -->
     <button class="profile-toggle" id="profileToggle">
         <span></span>
         <span></span>
         <span></span>
     </button>
 
-    <!-- ✅ Overlay -->
+    <!-- Overlay -->
     <div id="overlay"></div>
 
-    <!-- ✅ Sidebar -->
+    <!-- Sidebar -->
     <div class="profile-left" id="profileSidebar">
         <!-- Close button inside the sidebar drawer -->
         <button class="sidebar-close" id="sidebarClose">&times;</button>
@@ -31,6 +31,8 @@
 
         <p onclick="window.location.href='@Url.Action("Profile", "User")'">Profile</p>
         <p onclick="window.location.href='@Url.Action("UserAllPosts", "Post")'">Your All Posts</p>
+        @* Added Draft Posts link pointing to common listing with isDraft=true *@
+        <p onclick="window.location.href='@Url.Action("UserAllPosts", "Post", new { isDraft = true })'">Draft Posts</p>
         <p onclick="window.location.href='@Url.Action("ChangePasswordPage", "User")'">
             Change Password
         </p>
@@ -38,7 +40,7 @@
         <p onclick="window.location.href='@Url.Action("Logout", "User")'">Logout</p>
     </div>
 
-    <!-- ✅ Right Content -->
+    <!-- Right Content -->
     <div class="profile-right">
         @{
             var section = ViewBag.Section as string;

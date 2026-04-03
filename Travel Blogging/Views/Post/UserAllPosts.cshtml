@@ -23,11 +23,24 @@
 <div class="all-post">
     @if (datas?.Count>0)
     {
-        <p class="all-post-heading">YOUR ALL POSTS</p>
+        @* Updated by Antigravity: Showing title based on boolean flag passed from controller *@
+        @if (ViewBag.isDraft == true)
+        {
+            <p class="all-post-heading">DRAFT POSTS</p>
+        }
+        else
+        {
+            <p class="all-post-heading">YOUR ALL POSTS</p>
+        }
+
         <div class="all-post-content">
             @foreach (var post in datas ?? new List<PostModel>())
             {
-                <div class="all-post-content-box" onclick="window.location.href='@Url.Action("PostDetails", "Post", new { id = post.Id })'">
+                @* Disabled redirection to PostDetails if viewing Drafts *@
+                bool isDraft = ViewBag.isDraft ?? false;
+                <div class="all-post-content-box @(isDraft ? "draft-no-click" : "")"
+                    @(isDraft ? "" : "onclick=" + $"window.location.href='{Url.Action("PostDetails", "Post", new { id = post.Id })}'")>
+
                     <img src=@post.ImageUrl />
                     <p class="all-post-content-box-title">
                         <svg style="margin-bottom: 6px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
@@ -60,7 +73,14 @@
     {
         <div class="post-empty-box">
             <img src="/photos/empty-box.png"/>
-            <p>Your Post is Empty</p>
+            @if (ViewBag.isDraft == true)
+            {
+                <p>Your Draft is Empty</p>
+            }
+            else
+            {
+                <p>Your Post is Empty</p>
+            }
             <button onclick="window.location.href='@Url.Action("UploadPost", "Post")'">Add Post</button>
         </div>
     }

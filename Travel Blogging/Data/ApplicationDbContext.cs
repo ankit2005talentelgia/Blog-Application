@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Data;
 using Travel_Blogging.Models;
 
 namespace Travel_Blogging.Data

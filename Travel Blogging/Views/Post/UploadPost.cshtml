@@ -29,7 +29,7 @@
                      style="@(Model?.ExistingImageUrl != null ? "display:block" : "display:none")" />
 
                 <span id="uploadText">
-                    @(Model?.ExistingImageUrl != null ? "Change Image" : "Choose File")
+                    @(Model?.ExistingImageUrl != null ? "" : "Choose File")
                 </span>
 
                 <input asp-for="Image" type="file" accept="image/*" onchange="previewImage(event)">
@@ -63,7 +63,7 @@
 
                 <!-- Publish Button -->
                 <button type="submit" class="publish-btn" onclick="setAction('publish')">
-                    @(Model?.Id == 0 ? "Publish Post" : "Update & Publish")
+                    @(Model==null || Model?.Id == 0 ? "Publish Post" : "Update & Publish")
                 </button>
             </div>
 
@@ -113,6 +113,11 @@
     // this is for when button is clicked
     function setAction(value) {
         document.getElementById("actionType").value = value;
+    }
+
+    // Prevents "Resubmit Form" warning on browser refresh or back navigation
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
     }
 
 </script>

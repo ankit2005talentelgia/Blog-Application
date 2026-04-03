@@ -16,7 +16,7 @@
     min-height: 25rem;
     width: 100%;
     max-width: 18rem;
-    padding: 3rem;
+    padding: 1.8rem;
     border: 1px solid #ddd;
     border-radius: 12px;
     display: flex;
@@ -99,9 +99,9 @@
 /* .profile-toggle.active span:nth-child(1) { ... } */
 
 .profile-right {
-    min-height: 25rem;
+/*    min-height: 25rem;*/
     width: 90%;
-    flex: 1;
+/*    flex: 1;*/
     /* Take remaining space */
     max-width: 40rem;
     padding: 3.5rem;

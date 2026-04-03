@@ -82,9 +82,10 @@ namespace Travel_Blogging.Services.Implementations
         }
 
         // this function is for finding the all posts of the loggedin user
-        public async Task<List<PostModel>>FindUserPosts(int userId)
+        public async Task<List<PostModel>>FindUserPosts(int userId, bool isDraft = false)
         {
-            return await _postRepository.FindUserPostsAsync(userId);
+            var status = isDraft ? PostStatus.Draft : PostStatus.Published;
+            return await _postRepository.FindUserPostsAsync(userId, status);
         }
 
         // this function is for delete any specific post of loggedin user
@@ -130,7 +131,7 @@ namespace Travel_Blogging.Services.Implementations
 
 
         // this function is for edit the post details (i.e httpPost)
-        public async Task<PostModel> UpdatePost(CreatePostDto dto)
+        public async Task<PostModel> UpdatePost(CreatePostDto dto, string actionType)
         {
             if (!dto.Id.HasValue) return null;
 
@@ -143,6 +144,9 @@ namespace Travel_Blogging.Services.Implementations
             post.Location = dto.Location;
             post.UpdatedAt = DateTime.Now;
             post.UpdatedBy = post.AuthorId;
+
+            // Update status based on the button clicked
+            post.Status = actionType == "publish" ? PostStatus.Published : PostStatus.Draft;
 
             // if image is changed
             if (dto.Image != null)

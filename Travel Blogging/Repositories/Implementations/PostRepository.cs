@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Travel_Blogging.Data;
 using Travel_Blogging.Models;
+using Travel_Blogging.Models.Enums;
 using Travel_Blogging.Repositories.Interfaces;
 
 namespace Travel_Blogging.Repositories.Implementations
@@ -24,7 +25,9 @@ namespace Travel_Blogging.Repositories.Implementations
         // this function is for find the all post from the database
         public async Task<List<PostModel>> FindPostsAsync()
         {
-            var posts = await _context.Posts.ToListAsync();
+            var posts = await _context.Posts
+                .Where(p=>p.Status==PostStatus.Published)
+                .ToListAsync();
             return posts;
         }
 
@@ -46,16 +49,16 @@ namespace Travel_Blogging.Repositories.Implementations
             var tenDaysAgo = DateTime.Now.AddDays(-10);
 
             return await _context.Posts
-                .Where(p => p.CreatedAt >= tenDaysAgo)
+                .Where(p => p.CreatedAt >= tenDaysAgo && p.Status == PostStatus.Published)
                 .OrderByDescending(p => p.CreatedAt)
                 .ToListAsync();
         }
 
         // this function is for finding all the post of currently loggedin user
-        public async Task<List<PostModel>> FindUserPostsAsync(int userId)
+        public async Task<List<PostModel>> FindUserPostsAsync(int userId, PostStatus status)
         {
             return await _context.Posts
-                .Where(p => p.AuthorId == userId)
+                .Where(p => p.AuthorId == userId && p.Status == status)
                 .ToListAsync();
         }
 
@@ -74,6 +77,15 @@ namespace Travel_Blogging.Repositories.Implementations
                 await _context.SaveChangesAsync();
             }
         }
+
+        // this function is for deleting all the post when user's account is deleted
+        //public async Task DeletePostAsync(int postId, int authorId)
+        //{
+        //    var post = await _context.Posts
+        //        .Where(p => p.Id == postId && p.AuthorId == authorId)
+        //        .ExecuteDeleteAsync();
+        //}
+
 
         // this function is for finding the post with postid
         public async Task<PostModel> FindPostByIdAsync(int postId)

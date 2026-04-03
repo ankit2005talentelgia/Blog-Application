@@ -7,6 +7,6 @@ namespace Travel_Blogging.Services.Interfaces
     {
         Task<ReviewModel> AddReview(CreateReviewDto dto, int userId);
 
-        Task DeleteReview(int postId, int reviewId);
+        Task DeleteReview(int postId, int reviewId, int userId);
     }
 }

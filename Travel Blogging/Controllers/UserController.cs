@@ -76,9 +76,9 @@ namespace Travel_Blogging.Controllers
             );
 
 
-            _toastNotification.AddSuccessToastMessage("Successfully user registered");
+            _toastNotification.AddSuccessToastMessage("verify your email");
 
-            return View("CheckEmail");
+            return RedirectToAction("CheckEmail", "User");
         }
 
 
@@ -94,13 +94,47 @@ namespace Travel_Blogging.Controllers
 
                 if (isVerified == "False")
                 {
+                    ViewBag.Email = User.FindFirstValue(ClaimTypes.Email);
                     return View();
                 }
 
                 // if user is verified then redirect to the profile page
                 return RedirectToAction("Profile", "User");
             }
-            return View("Login");
+            return RedirectToAction("Login", "User");
+        }
+
+
+        // this function is for resent the email when user clicks the resend email button
+        [HttpGet("resend-verification-email")]
+        public async Task<IActionResult> ResendConfirmationEmail()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "User");
+            }
+
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var user = await _userService.UpdateProfile(new UpdateProfileDto { Email = email, Name = User.Identity.Name }, email, User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            // Generate a confirmation link
+            var confirmationLink = Url.Action(
+                "ConfirmEmail",
+                "User",
+                new { token = user.EmailConfirmationToken, email = user.Email },
+                Request.Scheme
+            );
+
+            // Send confirmation link
+            await _emailService.SendEmailAsync(
+                user.Email,
+                "Confirm your email",
+                $"<p>Click here: <a href='{confirmationLink}'>Confirm Email</a></p>"
+            );
+
+            _toastNotification.AddSuccessToastMessage("Verification email sent again!");
+
+            return RedirectToAction("CheckEmail", "User");
         }
 
         // after signup confirm user's email when user click the confirmation link

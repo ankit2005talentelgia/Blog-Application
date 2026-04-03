@@ -18,7 +18,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
 {
     ProgressBar = false,
-    PositionClass = ToastPositions.BottomCenter
+    PositionClass = ToastPositions.TopCenter
 });
 
 // connect with db

@@ -20,14 +20,16 @@ namespace Travel_Blogging.Services.Implementations
         private readonly IUserRepository _userRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IReviewRepository _commentRepository;
+        private readonly IPostRepository _postRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public UserService(IUserRepository userRepository, IHttpContextAccessor httpContextAccessor, IReviewRepository commentRepository, IWebHostEnvironment webHostEnvironment)
+        public UserService(IUserRepository userRepository, IHttpContextAccessor httpContextAccessor, IReviewRepository commentRepository, IWebHostEnvironment webHostEnvironment, IPostRepository postRepository)
         {
             _userRepository = userRepository;
             _httpContextAccessor = httpContextAccessor;
             _commentRepository = commentRepository;
             _webHostEnvironment = webHostEnvironment;
+            _postRepository = postRepository;
         }
 
         // this function is for creating the user
@@ -237,15 +239,20 @@ namespace Travel_Blogging.Services.Implementations
                         File.Delete(imagePath);
                     }
                 }
+
+                // soft delete all it's post
+                post.IsDeleted = true;
+                post.IsActive = false;
+                post.UpdatedAt = DateTime.Now;
+                post.UpdatedBy = userId;
             }
 
             // delete the user's account by calling the userRepo
             await _userRepository.DeleteAccountAsync(userId);
 
-            // now with deleting the user it's all post is automatically deleted from the database (EF deletes by Foreign key)
-            // but user's comments on other's post is not automatically deleted by EF bcz post and comment both connects with the user
-            // so EF executes the deletion command through 2 way --> user->post->comment and user->comment so this gives error
-            // that's why we manually handle this by saying EF to delete only through post way and deletes comment by manually
+            // save the post in the db
+            await _postRepository.UpdatePostAsync();
+
             await _commentRepository.DeleteComments(userId);
 
             // deletes the cookies which is stored in the browser

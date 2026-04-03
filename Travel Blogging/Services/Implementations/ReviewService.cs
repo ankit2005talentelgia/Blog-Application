@@ -31,9 +31,9 @@ namespace Travel_Blogging.Services.Implementations
         }
 
         // this function is for deleting any review when user deletes the review button
-        public async Task DeleteReview(int postId, int reviewId)
+        public async Task DeleteReview(int postId, int reviewId, int userId)
         {
-            await _reviewRepository.DeleteReviewAsync(postId, reviewId);
+            await _reviewRepository.DeleteReviewAsync(postId, reviewId, userId);
         }
     }
 }

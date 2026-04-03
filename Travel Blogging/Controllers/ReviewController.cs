@@ -65,7 +65,9 @@ public class ReviewController:Controller
             return View("CheckEmail", "User");
         }
 
-        await _reviewService.DeleteReview(dto.PostId, dto.ReviewId);
+        int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        await _reviewService.DeleteReview(dto.PostId, dto.ReviewId, userId);
         _toastNotification.AddSuccessToastMessage("review deletes successfully");
         return Ok();
     }
