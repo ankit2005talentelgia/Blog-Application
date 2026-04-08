@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Solo Trip</title>
+    <title>Moto Blog</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" /> 
     @* <link rel="stylesheet" href="~/Travel_Blogging.styles.css" asp-append-version="true" />  *@
@@ -23,8 +23,8 @@
             </button>
             <div class="navbar-home" id="navbar-menu">
                 <p onclick="window.location.href='@Url.Action("Index", "Home")'">Home</p>
+                <p onclick="window.location.href='@Url.Action("AllPost", "Post")'">All posts</p>
                 <p onclick="window.location.href='@Url.Action("Contact", "Admin")'">Contact</p>
-                <p onclick="window.location.href='@Url.Action("AllPost","Post")'">All posts</p>
                 
                 @if (!User.Identity.IsAuthenticated)
                 {

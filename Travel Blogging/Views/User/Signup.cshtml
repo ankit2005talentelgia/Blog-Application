@@ -20,19 +20,19 @@
 
             <form id="myForm" method="post" asp-controller="User" asp-action="Signup">
                 <div class="input-group">
-                    <label>Name</label>
+                    <label>Name <small class="text-danger">*</small></label>
                     <input asp-for="Name" type="text" placeholder="Enter your name" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
 
                 <div class="input-group">
-                    <label>Email</label>
+                    <label>Email <small class="text-danger">*</small></label>
                     <input asp-for="Email" type="email" placeholder="Enter your email" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
 
                 <div class="input-group">
-                    <label>Password</label>
+                    <label>Password <small class="text-danger">*</small></label>
 
                     <div class="password-wrapper">
                         <input id="passwordField" asp-for="Password" type="password" placeholder="Enter your password" required />
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="input-group">
-                    <label>Confirm Password</label>
+                    <label>Confirm Password <small class="text-danger">*</small></label>
 
                     <div class="password-wrapper">
                         <input id="passwordField" asp-for="ConfirmPassword" type="password" placeholder="Enter your confirm password" required />

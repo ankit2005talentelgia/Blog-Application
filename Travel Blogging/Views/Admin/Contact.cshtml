@@ -1,9 +1,113 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
+    ViewData["Title"] = "Contact Us";
 }
 
-<link rel="stylesheet" href="~/css/pages/AdminContact.css" asp-append-version="true"/>
+@model Travel_Blogging.DTOs.ContactDto.ContactDto;
 
-<div class="contact">This page is Under Development</div>
+<link rel="stylesheet" href="~/css/pages/Contact.css" asp-append-version="true" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<div class="contact-page">
+    <div class="contact-container">
+        <!-- Sidebar Info -->
+        <div class="contact-info">
+            <div>
+                <h2>Contact Us</h2>
+                <p>Have something to share or need assistance with your travel stories? We'd love to hear from you!</p>
+            </div>
+
+            <div class="info-items">
+                <div class="info-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    <span>+91 96567-89450</span>
+                </div>
+                <div class="info-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <span>hello@motoblog.com</span>
+                </div>
+                <div class="info-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>123 Travel Lane, Adventure City, Himachal</span>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="#" class="social-link" title="X (Twitter)">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Form Section -->
+        <div class="contact-form-section">
+            <h1>Get in touch</h1>
+            <form id="myForm" method="post" asp-controller="Admin" asp-action="Contact">
+                <div class="form-group">
+                    <label for="name">Full Name <small class="text-danger">*</small></label>
+                    <input asp-for="Name" type="text" id="name" placeholder="John Doe" required />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address <small class="text-danger">*</small></label>
+                    <input asp-for="Email" type="email" id="email" placeholder="john@example.com" required />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject <small class="text-danger">*</small></label>
+                    <input asp-for="Subject" type="text" id="subject" placeholder="General Inquiry" required />
+                    <span asp-validation-for="Subject" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message <small class="text-danger">*</small></label>
+                    <textarea asp-for="Message" id="message" rows="3" placeholder="How can we help?" required></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn-send" id="btnSend">Send Message</button>
+                
+                @if (TempData["ContactSuccess"] != null)
+                {
+                    <div class="success-message">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Thank You! For reaching out to Us. Our team will connect with you shortly.</span>
+                    </div>
+                }
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(function () {
+            const $form = $("#myForm");
+            const $btnSend = $("#btnSend");
+
+            // Initialize unobtrusive validation and onblur validation on input fields
+            $.validator.unobtrusive.parse("#myForm");
+            $("#myForm input").blur(function () {
+                $(this).valid();
+            });
+
+            // Handle form submission to show loading state
+            $form.on("submit", function (e) {
+                if ($form.valid()) {
+                    $btnSend.prop("disabled", true);
+                    $btnSend.html('Sending... <span class="spinner-border spinner-border-sm ms-2" role="status"></span>');
+                }
+            });
+        });
+    </script>
+}

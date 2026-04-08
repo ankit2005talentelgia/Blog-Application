@@ -5,6 +5,7 @@
     flex-wrap: wrap;
     padding: 0;
     margin: 0;
+    animation: fadeIn 0.5s ease-out;
 }
 
 .auth-img {
@@ -58,16 +59,16 @@
 }
 
 .input-group label {
-    font-size: 14px;
+    font-size: 1rem;
     display: block;
     margin-bottom: 0px;
-    font-weight:700;
+    font-weight:600;
 }
 
 .input-group input {
     width: 100%;
-    padding: 10px;
-    border-radius: 6px;
+    padding: 1rem;
+    border-radius: 0.8rem !important;
     border: 1px solid #ccc;
     outline: none;
     transition: 0.3s;
@@ -110,12 +111,13 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
 
 .auth-btn {
     width: 100%;
-    padding: 10px;
+    padding: 1rem;
     border: none;
     background: #667eea;
     color: white;
-    font-size: 16px;
-    border-radius: 6px;
+    font-size: 1rem;
+    font-weight:700;
+    border-radius: 0.8rem;
     cursor: pointer;
     margin-top: 10px;
     transition: 0.3s;
@@ -127,7 +129,7 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
 
 .switch-text {
     margin-top: 15px;
-    font-size: 14px;
+    font-size: 17px;
 }
 
 .switch-text span {
@@ -142,7 +144,7 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
 }
 
 .text-danger {
-    font-size: 12px;
+    font-size: 14px;
     color: red;
 }
 

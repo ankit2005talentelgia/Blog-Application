@@ -10,6 +10,7 @@ body {
     max-width: 950px;
     margin: 30px auto;
     padding: 0 15px;
+    animation: fadeIn 0.5s ease-out;
 }
 
 /* BLOG CARD */
@@ -134,7 +135,7 @@ svg.bi.bi-pencil-square:hover{
 
 .review-text {
     color: #555;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 svg.bi.bi-person {

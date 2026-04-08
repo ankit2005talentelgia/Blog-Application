@@ -11,6 +11,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    animation: fadeIn 0.5s ease-out;
 }
 
 .post-heading {
@@ -63,14 +64,16 @@
 
 .draft-btn {
     width: 100%;
-    padding: 12px;
+    padding: 1rem;
     border: 1px solid #ddd;
     background: white;
     color: #333;
     font-size: 16px;
-    border-radius: 6px;
+    border-radius: 0.8rem;
     cursor: pointer;
     transition: 0.2s;
+    font-size: 1rem;
+    font-weight: 700;
 }
 
 .draft-btn:hover {
@@ -98,22 +101,23 @@ label {
 
 .form-input {
     width: 100%;
-    padding: 10px;
+    padding: 1rem;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 0.8rem;
 }
 
 
 .publish-btn {
     width: 100%;
-    padding: 12px;
+    padding: 1rem;
     border: none;
     background: #667eea;
     color: white;
-    font-size: 16px;
-    border-radius: 6px;
+    border-radius: 0.8rem;
     cursor: pointer;
     transition: 0.2s;
+    font-weight: 700;
+    font-size: 1rem;
 }
 
 .publish-btn:hover {
