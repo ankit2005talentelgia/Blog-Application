@@ -1,44 +1,49 @@
-﻿
-@using Travel_Blogging.Models;
+﻿@using Travel_Blogging.Models;
 
 @{
     var datas = ViewData["posts"] as List<PostModel>;
 }
 
 
-<link rel="stylesheet" href="~/css/pages/HomePg.css" asp-append-version="true"/>
-
+<link rel="stylesheet" href="~/css/pages/HomePg.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
 <div class="home-pg">
     <div class="home-pg-img">
-        <p>Collect moments, not things...</p>
-        <p class="home-pg-content">Your Journey Deserves the Spotlight — Publish Your Adventures Blog Here !</p>
+        <p>Collect moments, not things.</p>
+        <p class="home-pg-content">This websites is for helping the people to share the best moments in their life.</p>
         <div>
             <button onclick="window.location.href='@Url.Action("AllPost", "Post")'">Explore</button>
-            <button onclick="window.location.href='@Url.Action("UploadPost", "Post")'">Add Blog</button>
+            <button onclick="window.location.href='@Url.Action("UploadPost", "Post")'">Create Blog</button>
         </div>
     </div>
-    <p class="home-pg-heading">Recent Travels</p>
-    @if (datas.Count > 0)
+
+    <p class="home-pg-heading">Latest Travels</p>
+
+    @if (datas != null && datas.Count > 0)
     {
         <div class="home-content">
-            @foreach (var post in datas ?? new List<PostModel>())
+            @foreach (var post in datas)
             {
                 <div class="home-content-box" onclick="window.location.href='@Url.Action("PostDetails", "Post", new { id = post.Id })'">
-                    <img src=@post.ImageUrl />
-                    <p class="first-child">
-                        <svg style="margin-bottom: 6px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-                            <path style="color: #de0d0d" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
-                        </svg>
+                    <div class="image-wrapper">
+                        <img src="@post.ImageUrl" alt="@post.Title" loading="lazy" />
+                    </div>
 
-                        @post.Title</p>
-                    <p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-                        </svg>
-                        
-                        @post.CreatedAt.ToString("dd-MM-yyyy")
-                    </p>
+                    <div class="post-info">
+                        <p class="post-title">@post.Title</p>
+                        <div class="post-location">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>@post.Location</span>
+                        </div>
+                        <div class="post-footer">
+                            <span class="post-date">
+                                <i class="fa-regular fa-calendar-days"></i>
+                                @post.CreatedAt.ToString("MMM dd, yyyy")
+                            </span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
                 </div>
             }
         </div>
@@ -47,8 +52,8 @@
     {
         <div class="post-empty-box">
             <img src="/photos/empty-box.png" />
-            <p>Post is Empty</p>
-            <button onclick="window.location.href='@Url.Action("UploadPost", "Post")'">Add Blog</button>
+            <p>Post Is Empty</p>
+            <button onclick="window.location.href='@Url.Action("UploadPost", "Post")'">Add Post</button>
         </div>
     }
 </div>

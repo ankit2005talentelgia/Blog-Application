@@ -1,4 +1,4 @@
-﻿using Travel_Blogging.Models;
+using Travel_Blogging.Models;
 using Travel_Blogging.Models.Enums;
 
 namespace Travel_Blogging.Repositories.Interfaces
@@ -6,7 +6,7 @@ namespace Travel_Blogging.Repositories.Interfaces
     public interface IPostRepository
     {
         Task<PostModel> CreatePostAsync(PostModel post);
-        Task<List<PostModel>> FindPostsAsync();
+        Task<List<PostModel>> FindPostsAsync(string search = null);
 
         Task<PostModel> FindPostDetailsAsync(int postId);
 

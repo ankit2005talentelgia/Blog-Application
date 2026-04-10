@@ -1,140 +1,299 @@
 .all-post {
     min-height: 30.5rem;
-    animation: fadeIn 0.5s ease-out;
+    padding: 2rem 5%;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header Section: Heading + Search */
+.all-post-header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4rem;
+    min-height: 4rem;
 }
 
 .all-post-heading {
-    font-size: 24px;
-    width: 18rem;
-    height: 2.5rem;
-    padding: 0.5rem;
-    letter-spacing: 5px;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #2d3436;
+    margin: 0;
+    letter-spacing: 1px;
     text-align: center;
-    margin: 10px auto;
-    border-bottom: 1px solid grey;
-    box-shadow: 3px 2px 2px 0px grey;
+    text-transform: uppercase;
+}
+
+    .all-post-heading::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 4px;
+        background: #6c5ce7;
+        margin: 12px auto 0;
+        border-radius: 2px;
+    }
+
+/* Compact Search Container (Positioned Right) */
+.search-container {
+    position: absolute;
+    right: 0;
+    max-width: 320px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.7rem 1rem 0.7rem 2.8rem;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border: 1.5px solid transparent;
+}
+
+    .search-input:focus {
+        outline: none;
+        box-shadow: 0 8px 20px rgba(108, 92, 231, 0.12);
+        border-color: #6c5ce7;
+    }
+
+.search-icon {
+    position: absolute;
+    left: 1.1rem;
+    color: #a0a0a0;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.search-input:focus + .search-icon {
+    color: #6c5ce7;
 }
 
 .all-post-content {
-    width: 95%;
-    max-width: 1400px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    justify-content: center; /* This centers the items horizontally */
+    gap: 2.5rem;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
-    padding: 3rem 0;
 }
 
+/* Card Improvements */
 .all-post-content-box {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
     display: flex;
     flex-direction: column;
-    width: 18rem;
-    background-color: white;
-    border: 1px solid #eee;
-    border-radius: 12px;
-    padding: 1.2rem;
-    gap: 1rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.02);
+    position: relative;
+}
+
+    .all-post-content-box:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+
+.image-wrapper {
+    overflow: hidden;
+    height: 200px;
+}
+
+.all-post-content-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.all-post-content-box:hover img {
+    transform: scale(1.08);
+}
+
+/* Edit/Delete Overlay for UserAllPosts */
+.post-actions-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(-5px);
     transition: all 0.3s ease;
+    z-index: 10;
 }
 
-.all-post-content-box:hover {
-    transform: translateY(-3px);
+.all-post-content-box:hover .post-actions-overlay {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* Style to indicate unclickable draft boxes */
-.draft-no-click {
-    cursor: default !important;
-}
-
-.draft-no-click:hover {
-    transform: none !important;
-}
-
-.all-post-content-box p {
-    margin: 0px;
-    padding: 0px;
-}
-
-.all-post-content-box-title {
-    color: #444343;
-    line-height: 18px;
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.all-post-content-box p:last-child {
-    font-weight: 600;
-}
-
-.all-post-content-box img{
-    height: 10rem;
-    object-fit:cover;
-}
-
-.post-empty-box{
-    min-height:32rem;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-}
-
-.post-empty-box img{
-    height:5rem;
-}
-
-.post-empty-box p {
-    font-size: 1.5rem;
-    color: #585858;
-}
-
-.post-empty-box button {
-    width:5rem;
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
     border: none;
-    background-color: #667eea;
+    color: #2d3436;
+    backdrop-filter: blur(4px);
+}
+
+    .action-btn:hover {
+        transform: scale(1.1);
+    }
+
+.edit-btn:hover {
+    background: #6c5ce7;
     color: white;
-    border-radius:3px;
-    padding:0.3rem;
-    font-size:small;
 }
 
-.post-empty-box button:hover {
-    background-color: #5563d6;
+.delete-btn:hover {
+    background: #ff7675;
+    color: white;
 }
 
-.all-post-delete-section{
-    display:flex;
-    flex-direction:row;
-    justify-content:space-between;
+.post-info {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
 }
 
-.all-post-delete-section p{
-    margin-left:-7px;
+.post-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2d3436;
+    margin: 0;
+    line-height: 1.4;
+    transition: color 0.3s ease;
 }
 
-.edit-icon{
-    color:grey;
-    transition:all 0.3s ease-in-out;
+.all-post-content-box:hover .post-title {
+    color: #6c5ce7;
 }
 
-.edit-icon:hover {
-    color: black;
+.post-location {
+    font-size: 0.85rem;
+    color: #636e72;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
 }
 
-.delete-icon{
-    color:grey;
-    transition:all 0.3s ease-in-out;
+    .post-location i {
+        color: #e17055;
+        font-size: 0.95rem;
+    }
+
+.post-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f2f6;
 }
 
-.delete-icon:hover {
-    color: black;
+.post-date {
+    font-size: 0.8rem;
+    color: #b2bec3;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
-/* Media Queries */
-@media screen and (max-width: 480px) {
+.post-empty-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem;
+    width: 100%;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+    .post-empty-box img {
+        width: 140px;
+        height: auto;
+        margin-bottom: 2rem;
+        opacity: 0.7;
+        filter: grayscale(0.2);
+    }
+
+    .post-empty-box p {
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: #636e72;
+        margin-bottom: 2.5rem;
+        max-width: 500px;
+        line-height: 1.5;
+    }
+
+    .post-empty-box button {
+        background: #6c5ce7;
+        color: white;
+        border: none;
+        padding: 1rem 3rem;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 25px rgba(108, 92, 231, 0.25);
+    }
+
+        .post-empty-box button:hover {
+            background: #5b4bc4;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.35);
+        }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .all-post-header {
+        flex-direction: column;
+        gap: 1.5rem;
+        min-height: auto;
+    }
+
+    .search-container {
+        position: relative; /* Reset from absolute on mobile */
+        right: auto;
+        max-width: 100%;
+    }
+
+    .all-post-heading {
+        font-size: 1.8rem;
+    }
+
     .all-post-content {
         grid-template-columns: 1fr;
     }

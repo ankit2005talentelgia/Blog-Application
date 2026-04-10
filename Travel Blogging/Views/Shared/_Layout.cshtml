@@ -12,7 +12,7 @@
 <body>
     <header>
         <div class="navbar">
-            <div class="navbar-logo">
+            <div onclick="window.location.href='@Url.Action("Index", "Home")'" class="navbar-logo">
                 <img src="/photos/flight.png" alt="Logo" />
                 <p>MOTO BLOG</p>
             </div>
@@ -24,7 +24,7 @@
             <div class="navbar-home" id="navbar-menu">
                 <p onclick="window.location.href='@Url.Action("Index", "Home")'">Home</p>
                 <p onclick="window.location.href='@Url.Action("AllPost", "Post")'">All posts</p>
-                <p onclick="window.location.href='@Url.Action("Contact", "Admin")'">Contact</p>
+                <p onclick="window.location.href='@Url.Action("Contact", "Admin")'">Contact Us</p>
                 
                 @if (!User.Identity.IsAuthenticated)
                 {

@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using Travel_Blogging.DTOs.PostDto;
 using Travel_Blogging.Models;
 using Travel_Blogging.Models.Enums;
@@ -61,10 +61,9 @@ namespace Travel_Blogging.Services.Implementations
             return newPost;
         }
 
-        // this function is for finding all the posts
-        public async Task<List<PostModel>> FindPosts()
+        public async Task<List<PostModel>> FindPosts(string search = null)
         {
-            var posts = await _postRepository.FindPostsAsync();
+            var posts = await _postRepository.FindPostsAsync(search);
             return posts;
         }
 

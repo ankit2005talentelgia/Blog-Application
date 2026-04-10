@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NToastNotify;
 using System.Security.Claims;
@@ -46,12 +46,13 @@ namespace Travel_Blogging.Controllers
 
         // this function is for showing all the posts
         [HttpGet("")]
-        public async Task<IActionResult> AllPost()
+        public async Task<IActionResult> AllPost(string search = null)
         {
-            var posts = await _postService.FindPosts();
+            var posts = await _postService.FindPosts(search);
 
             // save this data into viewdata
             ViewData["posts"] = posts;
+            ViewBag.Search = search;
             return View();
         }
 

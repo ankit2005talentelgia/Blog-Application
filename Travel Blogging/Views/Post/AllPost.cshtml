@@ -1,40 +1,132 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
 @using Travel_Blogging.Models;
 
 @{
     var datas = ViewData["posts"] as List<PostModel>;
+    var search = ViewBag.Search as string;
 }
 
 <link rel="stylesheet" href="~/css/pages/AllPost.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
-@if (datas.Count > 0)
-{
-    <div class="all-post">
-        <p class="all-post-heading">ALL POSTS</p>
-        <div class="all-post-content">
-            @foreach (var post in datas ?? new List<PostModel>())
+<div class="all-post">
+    <!-- Header Section: Heading and Search -->
+    <div class="all-post-header">
+        <p class="all-post-heading">Explore Journeys</p>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search by location, title..." value="@search" autocomplete="off" />
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+    </div>
+
+    @if (datas != null && datas.Count > 0)
+    {
+        <div class="all-post-content" id="postGrid">
+            @foreach (var post in datas)
             {
-                <div class="all-post-content-box" onclick="window.location.href='@Url.Action("PostDetails", "Post", new { id = post.Id })'">
-                    <img src=@post.ImageUrl />
-                    <p class="all-post-content-box-title">
-                        <svg style="margin-bottom: 6px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-                            <path style="color: #de0d0d" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
-                        </svg>
-                        @post.Title</p>
-                    <p>@post.CreatedAt.ToString("dd-MM-yyyy")</p>
+                <div class="all-post-content-box post-card"
+                     data-title="@post.Title"
+                     data-location="@post.Location"
+                     onclick="window.location.href='@Url.Action("PostDetails", "Post", new { id = post.Id })'">
+                    
+                    <div class="image-wrapper">
+                        <img src="@post.ImageUrl" alt="@post.Title" loading="lazy" />
+                    </div>
+                    
+                    <div class="post-info">
+                        <p class="post-title">@post.Title</p>
+                        <div class="post-location">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>@post.Location</span>
+                        </div>
+                        <div class="post-footer">
+                            <span class="post-date">
+                                <i class="fa-regular fa-calendar-days"></i>
+                                @post.CreatedAt.ToString("MMM dd, yyyy")
+                            </span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
                 </div>
             }
         </div>
+    }
+
+    <!-- Empty State / No Results -->
+    <div id="emptyBox" class="post-empty-box" style="@(datas?.Count > 0 ? "display:none" : "")">
+        <img src="/photos/empty-box.png" alt="No posts" />
+        <p id="emptyMessage">No posts found at this location.</p>
+        <button onclick="window.location.href='@Url.Action("UploadPost", "Post")'">Create First Post</button>
     </div>
-}
-else
-{
-    <div class="post-empty-box">
-        <img src="/photos/empty-box.png" />
-        <p>Post is Empty</p>
-        <button onclick="window.location.href='@Url.Action("UploadPost", "Post")'">Add Blog</button>
-    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchInput');
+        const postGrid = document.getElementById('postGrid');
+        const postCards = document.querySelectorAll('.post-card');
+        const emptyBox = document.getElementById('emptyBox');
+        const emptyMessage = document.getElementById('emptyMessage');
+
+        // Collect all post data for client-side fuzzy search
+        const posts = Array.from(postCards).map(card => ({
+        element: card,
+        title: card.getAttribute('data-title'),
+        location: card.getAttribute('data-location')
+        }));
+
+        // Initialize Fuse.js
+        const fuse = new Fuse(posts, {
+        keys: ['title', 'location'],
+        threshold: 0.3, // Lower threshold means more exact matching
+        distance: 100,
+        ignoreLocation: true
+        });
+
+        function performSearch() {
+        const query = searchInput.value.trim();
+                
+        if (query === "") {
+        // Show all cards
+        postCards.forEach(card => card.style.display = 'flex');
+        if (postGrid) postGrid.style.display = 'grid';
+        emptyBox.style.display = 'none';
+        return;
+        }
+
+        const results = fuse.search(query);
+                
+        // Hide all cards first
+        postCards.forEach(card => card.style.display = 'none');
+
+        if (results.length > 0) {
+        // Show matching cards
+        results.forEach(result => {
+        result.item.element.style.display = 'flex';
+        });
+        if (postGrid) postGrid.style.display = 'grid';
+        emptyBox.style.display = 'none';
+        } else {
+        // Show no results state
+        if (postGrid) postGrid.style.display = 'none';
+        emptyBox.style.display = 'flex';
+        emptyMessage.textContent = `No results found for "${query}"`;
+        }
+        }
+
+        // Real-time search with debounce
+        let debounceTimer;
+        searchInput.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(performSearch, 300);
+        });
+
+        // Initial search check (if search came from URL)
+        if (searchInput.value) {
+        performSearch();
+        }
+        });
+    </script>
 }

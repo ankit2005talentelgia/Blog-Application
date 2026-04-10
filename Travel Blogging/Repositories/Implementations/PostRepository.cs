@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Travel_Blogging.Data;
 using Travel_Blogging.Models;
 using Travel_Blogging.Models.Enums;
@@ -23,11 +23,18 @@ namespace Travel_Blogging.Repositories.Implementations
         }
 
         // this function is for find the all post from the database
-        public async Task<List<PostModel>> FindPostsAsync()
+        public async Task<List<PostModel>> FindPostsAsync(string search = null)
         {
-            var posts = await _context.Posts
-                .Where(p=>p.Status==PostStatus.Published)
-                .ToListAsync();
+            var query = _context.Posts
+                .Where(p => p.Status == PostStatus.Published);
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                search = search.ToLower();
+                query = query.Where(p => p.Title.ToLower().Contains(search) || p.Location.ToLower().Contains(search));
+            }
+
+            var posts = await query.ToListAsync();
             return posts;
         }
 
